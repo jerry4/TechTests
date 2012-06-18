@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using Microsoft.CSharp.RuntimeBinder;
@@ -31,5 +32,14 @@ namespace DynamicKeyword
                                                 string b = a.Test;
                                               });
     }
+
+    [Fact]
+    public void CanCheckToSeeIfThingExists()
+    {
+      dynamic a = "hi there";
+      // no good way to do this.  Try catch???
+    }
+
+
   }
 }
