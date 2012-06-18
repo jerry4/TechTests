@@ -40,6 +40,26 @@ namespace DynamicKeyword
       // no good way to do this.  Try catch???
     }
 
+    public class CustomDynamic : DynamicObject
+    {
+      public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+      {
+        bool success = base.TryInvokeMember(binder, args, out result);
 
+        // If the method didn't exist, ensure the result is null
+        if (!success) result = null;
+
+        // Always return true to avoid Exceptions being raised
+        return true;
+      }
+    }
+    
+    [Fact]
+    public void CustomDynamicHasProperty()
+    {
+      // not great rhs has to be a specific type of class that derives from DynamicObject
+      dynamic a = new CustomDynamic();
+      Assert.DoesNotThrow(() => a.Test() );
+    }
   }
 }
